@@ -1,16 +1,26 @@
-from flask import Flask
+from flask import Flask, jsonify, request
+import json 
 app = Flask(__name__)
 
 todos = [
     { "label": "My first task", "done": False },
-    { "label": "My second task", "done": False }
+    { "label": "My second task", "done": False },
+    { "label": "Sample Todo 1", "done": True }
 ]
 
 @app.route('/todos', methods=['GET'])
 def hello_world():
-    todos = {"label": "My first task", "done": False } 
     json_text = jsonify(todos)
     return json_text
+
+@app.route('/todos', methods=['POST'])
+def add_new_todo():
+    request_body = json.loads(request.data)
+    print("Incoming request with the following body", request_body)
+    return 'Response for the POST todo'
+
+
+
 
 
 if __name__ == '__main__':
